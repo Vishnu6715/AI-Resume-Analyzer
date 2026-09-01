@@ -1,0 +1,185 @@
+<div class="dashboard-page">
+
+  <header class="dashboard-header">
+
+    <div>
+      <span class="dashboard-label">YOUR DASHBOARD</span>
+
+      <h1>Resume Analysis Overview</h1>
+
+      <p>
+        Your real analysis statistics from the database.
+      </p>
+    </div>
+
+  </header>
+
+
+  <main class="dashboard-content">
+
+    <!-- ==============================
+         STATISTICS
+    =============================== -->
+
+    <section class="dashboard-stats">
+
+      <!-- Total Analyses -->
+
+      <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+          📄
+        </div>
+
+        <h3>Total Analyses</h3>
+
+        <div class="dashboard-number">
+          {{ dashboardStats?.totalAnalyses ?? 0 }}
+        </div>
+
+        <p>Resumes analyzed</p>
+
+      </div>
+
+
+      <!-- Average Score -->
+
+      <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+          ⭐
+        </div>
+
+        <h3>Average Score</h3>
+
+        <div class="dashboard-number">
+          {{ dashboardStats?.averageScore ?? 0 }}
+        </div>
+
+        <p>Out of 100</p>
+
+      </div>
+
+
+      <!-- Average ATS -->
+
+      <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+          🎯
+        </div>
+
+        <h3>Average ATS</h3>
+
+        <div class="dashboard-number">
+          {{ dashboardStats?.averageAtsScore ?? 0 }}%
+        </div>
+
+        <p>ATS compatibility</p>
+
+      </div>
+
+
+      <!-- Skills Match -->
+
+      <div class="dashboard-card">
+
+        <div class="dashboard-icon">
+          🧩
+        </div>
+
+        <h3>Skills Match</h3>
+
+        <div class="dashboard-number">
+          {{ dashboardStats?.averageSkillsMatch ?? 0 }}%
+        </div>
+
+        <p>Average skill match</p>
+
+      </div>
+
+    </section>
+
+
+    <!-- ==============================
+         BEST + LATEST
+    =============================== -->
+
+    <section class="dashboard-highlight">
+
+
+      <!-- BEST ANALYSIS -->
+
+      <div class="highlight-card">
+
+        <div class="highlight-title">
+          🏆 BEST ANALYSIS
+        </div>
+
+        <div class="highlight-content">
+
+          <div>
+
+            <h2>
+              {{ dashboardStats?.bestResume || 'No analysis yet' }}
+            </h2>
+
+            <p>
+              Your highest resume score
+            </p>
+
+          </div>
+
+          <div class="highlight-score">
+
+            {{ dashboardStats?.bestScore ?? 0 }}
+
+            <span>/ 100</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- LATEST ANALYSIS -->
+
+      <div class="highlight-card">
+
+        <div class="highlight-title">
+          🕘 LATEST ANALYSIS
+        </div>
+
+        <div class="highlight-content">
+
+          <div>
+
+            <h2>
+              {{ dashboardStats?.latestResume || 'No analysis yet' }}
+            </h2>
+
+            <p>
+              Most recently analyzed resume
+            </p>
+
+          </div>
+
+          <div class="highlight-score">
+
+            {{ dashboardStats?.latestScore ?? 0 }}
+
+            <span>/ 100</span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+  </main>
+
+</div>

@@ -1,0 +1,1274 @@
+<div class="page">
+
+  <!-- =========================
+       NAVBAR
+  ========================== -->
+
+  <nav class="navbar">
+
+    <div class="logo">
+
+      <span class="logo-icon">
+        AI
+      </span>
+
+      <span>
+        Resume<span class="highlight">Analyzer</span>
+      </span>
+
+    
+    <style>
+      /* Dynamic active state for Dashboard / History */
+      .nav-links .nav-link-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+      }
+
+      .nav-links .nav-link-btn.active {
+        color: #4f46e5;
+        background: #f5f3ff;
+        border: 1px solid #c7d2fe;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.10);
+      }
+
+      .nav-links .nav-link-btn.active::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 5px;
+        width: 20px;
+        height: 2px;
+        border-radius: 20px;
+        background: #6366f1;
+        transform: translateX(-50%);
+      }
+
+      .nav-links .nav-link-btn.section-active {
+        color: #4f46e5;
+        background: #f5f3ff;
+        border: 1px solid #c7d2fe;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.10);
+      }
+
+      .nav-links .nav-link-btn.section-active::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: 5px;
+        width: 20px;
+        height: 2px;
+        border-radius: 20px;
+        background: #6366f1;
+        transform: translateX(-50%);
+      }
+    </style>
+
+
+    <style>
+      .home-hero {
+        min-height: calc(100vh - 90px);
+        align-items: center;
+      }
+
+      .home-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-top: 28px;
+      }
+
+      .home-actions a {
+        text-decoration: none;
+      }
+
+      .secondary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 22px;
+        border-radius: 12px;
+        border: 1px solid #d8d4fe;
+        background: #f7f5ff;
+        color: #4f46e5;
+        font-weight: 600;
+        transition: 0.25s ease;
+      }
+
+      .secondary-btn:hover {
+        transform: translateY(-2px);
+        background: #ede9fe;
+      }
+
+      .hero-preview {
+        width: min(430px, 100%);
+        padding: 28px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 22px 60px rgba(79, 70, 229, 0.14);
+      }
+
+      .preview-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .preview-top span {
+        font-size: 11px;
+        font-weight: 700;
+        color: #6366f1;
+        letter-spacing: 1.4px;
+      }
+
+      .preview-top h3 {
+        margin: 7px 0 0;
+      }
+
+      .preview-ai {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: #eef2ff;
+        color: #4f46e5;
+        font-weight: 800;
+      }
+
+      .preview-score {
+        margin-top: 24px;
+      }
+
+      .preview-score strong {
+        font-size: 52px;
+        color: #111827;
+      }
+
+      .preview-score span {
+        color: #6b7280;
+      }
+
+      .preview-progress {
+        height: 8px;
+        margin-top: 8px;
+        overflow: hidden;
+        border-radius: 10px;
+        background: #e5e7eb;
+      }
+
+      .preview-progress-fill {
+        width: 87%;
+        height: 100%;
+        border-radius: inherit;
+        background: #6366f1;
+      }
+
+      .preview-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 24px;
+      }
+
+      .preview-metrics div {
+        padding: 14px 10px;
+        border-radius: 12px;
+        background: #f8fafc;
+        text-align: center;
+      }
+
+      .preview-metrics span {
+        display: block;
+        font-size: 12px;
+        color: #6b7280;
+      }
+
+      .preview-metrics strong {
+        display: block;
+        margin-top: 5px;
+        color: #4f46e5;
+      }
+
+      .preview-status {
+        margin-top: 18px;
+      }
+
+      .preview-status p {
+        margin: 8px 0;
+        color: #4b5563;
+        font-size: 13px;
+      }
+
+       
+
+      .home-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        padding: 8px 14px;
+        margin-bottom: 18px;
+        border-radius: 999px;
+        background: #eef2ff;
+        color: #4f46e5;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 2px;
+      }
+
+      .dynamic-home-title {
+        margin: 0;
+        line-height: 1.02;
+      }
+
+      .dynamic-home-title > span:first-of-type {
+        display: block;
+      }
+
+      .dynamic-word {
+        display: block;
+        position: relative;
+        min-height: 1.08em;
+        overflow: hidden;
+        color: #6366f1;
+      }
+
+      .dynamic-word span {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        opacity: 0;
+        transform: translateY(28px);
+        animation: homeWord 9s infinite;
+      }
+
+      .dynamic-word span:nth-child(2) {
+        animation-delay: 3s;
+      }
+
+      .dynamic-word span:nth-child(3) {
+        animation-delay: 6s;
+      }
+
+      .home-description {
+        max-width: 650px;
+      }
+
+      .hero-preview {
+        animation: previewFloat 5s ease-in-out infinite;
+      }
+
+      .preview-progress-fill {
+        animation: progressPulse 3s ease-in-out infinite alternate;
+      }
+
+      @keyframes homeWord {
+        0%, 5% {
+          opacity: 0;
+          transform: translateY(28px);
+        }
+        10%, 28% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        33%, 100% {
+          opacity: 0;
+          transform: translateY(-28px);
+        }
+      }
+
+      @keyframes previewFloat {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+
+      @keyframes progressPulse {
+        from { width: 78%; }
+        to { width: 94%; }
+      }
+
+      @media (max-width: 900px) {
+        .home-hero {
+          min-height: auto;
+        }
+
+        .home-actions {
+          flex-wrap: wrap;
+        }
+
+        .hero-preview {
+          margin-top: 30px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .home-actions a {
+          width: 100%;
+        }
+
+        .preview-metrics {
+          grid-template-columns: 1fr;
+        }
+
+      }
+    </style>
+
+</div>
+
+
+    <div class="nav-links">
+
+      <a href="/" class="nav-link-btn" [class.section-active]="isHomePage() && activeSection === 'home'" (click)="goToSection('home', $event)">
+        Home
+      </a>
+
+      <a href="/" class="nav-link-btn" [class.section-active]="isHomePage() && activeSection === 'features'" (click)="goToSection('features', $event)">
+        Features
+      </a>
+
+      <a href="/" class="nav-link-btn" [class.section-active]="isHomePage() && activeSection === 'resume-analyzer'" (click)="goToSection('resume-analyzer', $event)">
+        Resume Analyzer
+      </a>
+
+      @if (isLoggedIn) {
+        <a
+          class="nav-link-btn"
+          routerLink="/dashboard"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Dashboard
+        </a>
+      }
+
+
+      <!-- =========================
+           LOGGED IN NAVBAR
+      ========================== -->
+
+      @if (isLoggedIn) {
+
+        <a
+          class="nav-link-btn"
+          routerLink="/history"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          History
+        </a>
+
+<button
+  class="login-btn account-btn"
+  type="button"
+  (click)="openLogoutPopup()"
+>
+  {{ loggedInEmail }}
+</button>
+      }
+
+      @else {
+
+        <button
+          class="login-btn"
+          (click)="openLogin()"
+        >
+          Login
+        </button>
+
+      }
+
+    </div>
+
+  </nav>
+
+
+  @if (isHomePage()) {
+
+  <main>
+
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
+
+    @if (isHomePage() && activeSection === 'home') {
+
+    <section
+      class="hero home-hero"
+      id="home"
+    >
+
+      <div class="hero-content">
+
+        <div class="home-eyebrow">
+          RESUME ANALYZER
+        </div>
+
+        <h1 class="dynamic-home-title">
+          Build a Resume
+          <span class="dynamic-word">
+            <span>That Stands Out.</span>
+            <span>That Gets Noticed.</span>
+            <span>That Gets You Hired.</span>
+          </span>
+        </h1>
+
+        <p class="home-description">
+          Upload your resume, check your ATS compatibility, compare your
+          skills with a job description, and discover exactly what you
+          can improve before you apply.
+        </p>
+
+        <div class="home-actions">
+
+          <a
+            class="primary-btn home-analyze-btn"
+            href="#resume-analyzer"
+            (click)="goToSection('resume-analyzer', $event)"
+          >
+            Analyze My Resume →
+          </a>
+
+          <a
+            class="secondary-btn home-features-btn"
+            href="#features"
+            (click)="goToSection('features', $event)"
+          >
+            Explore Features
+          </a>
+
+        </div>
+
+      </div>
+
+      <div class="hero-preview">
+
+        <div class="preview-top">
+          <div>
+            <span>AI RESUME ANALYSIS</span>
+            <h3>Resume Score</h3>
+          </div>
+
+          <div class="preview-ai">
+            AI
+          </div>
+        </div>
+
+        <div class="preview-score">
+          <strong>87</strong>
+          <span>/ 100</span>
+        </div>
+
+        <div class="preview-progress">
+          <div class="preview-progress-fill"></div>
+        </div>
+
+        <div class="preview-metrics">
+
+          <div>
+            <span>ATS Score</span>
+            <strong>92%</strong>
+          </div>
+
+          <div>
+            <span>Skills Match</span>
+            <strong>84%</strong>
+          </div>
+
+          <div>
+            <span>Experience</span>
+            <strong>89%</strong>
+          </div>
+
+        </div>
+
+        <div class="preview-status">
+          <p>✓ Strong resume structure</p>
+          <p>✓ Good skills match</p>
+          <p>! Improve job keywords</p>
+        </div>
+
+      </div>
+
+    </section>
+
+    }
+
+    @if (isHomePage() && activeSection === 'resume-analyzer') {
+
+    <section
+      class="resume-analyzer-section"
+      id="resume-analyzer"
+    >
+
+      <div class="section-title">
+
+        <span>
+          RESUME ANALYZER
+        </span>
+
+        <h2>
+          Analyze Your Resume
+        </h2>
+
+        <p>
+          Upload your resume and compare it with the job you want.
+        </p>
+
+      </div>
+
+      <div class="hero-card resume-analyzer-card">
+
+        <div class="analyzer-workspace">
+
+          <!-- LEFT: USER INPUT -->
+          <div class="analyzer-left-panel">
+
+            <div class="card-header">
+
+              <div>
+                <h3>Resume Analyzer</h3>
+                <p>Upload your resume</p>
+              </div>
+
+              <div class="ai-icon">✦</div>
+
+            </div>
+
+
+            <div
+              class="upload-box"
+              id="upload"
+              [class.dragging]="isDragging"
+              (dragover)="onDragOver($event)"
+              (dragleave)="onDragLeave($event)"
+              (drop)="onDrop($event)"
+            >
+
+              <div class="upload-icon">📄</div>
+
+              <h3>Drop your resume here</h3>
+
+              <p>or click to browse your files</p>
+
+              <span>PDF files • Maximum 5MB</span>
+
+              <input
+                type="file"
+                #fileInput
+                accept=".pdf,application/pdf"
+                hidden
+                (change)="onFileSelected($event)"
+              />
+
+              <button
+                class="upload-btn"
+                type="button"
+                (click)="fileInput.click()"
+              >
+                Choose Resume
+              </button>
+
+              @if (selectedFile) {
+
+                <div class="selected-file">
+                  📄 {{ selectedFile.name }}
+                </div>
+
+              }
+
+            </div>
+
+
+            <div class="job-description">
+
+              <h3>Job Description</h3>
+
+              <p>
+                Paste the job description you want to apply for.
+              </p>
+
+              <textarea
+                [(ngModel)]="jobDescription"
+                placeholder="Paste the job description here..."
+                rows="7"
+              ></textarea>
+
+            </div>
+
+
+            <button
+              class="primary-btn analyzer-submit-btn"
+              type="button"
+              [disabled]="!selectedFile || isAnalyzing"
+              (click)="analyzeResume()"
+            >
+
+              @if (isAnalyzing) {
+                Analyzing...
+              }
+
+              @else {
+                Analyze Resume →
+              }
+
+            </button>
+
+          </div>
+
+
+          <!-- RIGHT: AI LIVE PANEL -->
+          <div class="analyzer-right-panel">
+
+            @if (analysisComplete && analysisResult) {
+
+              <!-- ANALYSIS RESULT -->
+
+              <div class="analysis-result-panel">
+
+                <div class="analysis-result-head">
+
+                  <span>✦ AI RESUME INTELLIGENCE</span>
+
+                  <span class="analysis-complete-badge">
+                    ✓ COMPLETE
+                  </span>
+
+                </div>
+
+
+                <div class="analysis-score-row">
+
+                  <div
+                    class="analysis-score"
+                    [style.--score]="analysisResult.score"
+                  >
+                    <strong>{{ analysisResult.score }}</strong>
+                    <small>/100</small>
+                  </div>
+
+
+                  <div class="analysis-metrics">
+
+                    <div class="analysis-metric">
+                      <span>ATS Score</span>
+                      <strong>{{ analysisResult.atsScore }}%</strong>
+                    </div>
+
+                    <div class="analysis-metric">
+                      <span>Skills Match</span>
+                      <strong>{{ analysisResult.skillsMatch }}%</strong>
+                    </div>
+
+                    <div class="analysis-metric">
+                      <span>Experience</span>
+                      <strong>{{ analysisResult.experience }}%</strong>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="analysis-tags">
+
+                  <div class="analysis-tag-box">
+
+                    <h4>✓ Strengths</h4>
+
+                    <div class="analysis-tags-list">
+
+                      @for (item of analysisResult.strengths; track item) {
+                        <span class="analysis-tag">
+                          {{ item }}
+                        </span>
+                      }
+
+                    </div>
+
+                  </div>
+
+
+                  <div class="analysis-tag-box">
+
+                    <h4>⚠ Missing Skills</h4>
+
+                    <div class="analysis-tags-list">
+
+                      @for (item of analysisResult.missingSkills; track item) {
+                        <span class="analysis-tag missing">
+                          {{ item }}
+                        </span>
+                      }
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+                <div class="analysis-recommendations">
+
+                  <h4>💡 AI Recommendations</h4>
+
+                  <ul>
+
+                    @for (
+                      item of analysisResult.recommendations;
+                      track item
+                    ) {
+
+                      <li>{{ item }}</li>
+
+                    }
+
+                  </ul>
+
+                </div>
+
+              </div>
+
+            }
+
+            @else {
+
+              <!-- AI READY / SCANNING ANIMATION -->
+
+              <div class="ai-ready-panel">
+
+                <div class="ai-orbit">
+
+                  <div class="ai-core">
+                    AI
+                  </div>
+
+                </div>
+
+
+                <div class="ai-ready-label">
+
+                  <span class="ai-ready-dot"></span>
+
+                  AI RESUME INTELLIGENCE
+
+                </div>
+
+
+                <h3>
+                  Ready to analyze
+                </h3>
+
+
+                <p>
+                  Upload your resume and add a job description.
+                  Your AI-powered analysis will appear here.
+                </p>
+
+
+                <div class="ai-scan-lines">
+
+                  <div class="ai-scan-line"></div>
+                  <div class="ai-scan-line"></div>
+                  <div class="ai-scan-line"></div>
+
+                </div>
+
+              </div>
+
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    }
+
+    @if (isHomePage() && activeSection === 'features') {
+<section id="features" class="features-section">
+
+  <div class="features-bg-dot dot-1"></div>
+  <div class="features-bg-dot dot-2"></div>
+  <div class="features-bg-circle"></div>
+
+  <div class="features-heading">
+    <span class="features-label">✦ POWERFUL FEATURES ✦</span>
+
+    <h1>
+      Everything you need to improve your
+      <span>resume</span>
+    </h1>
+
+    <p>
+      Analyze, improve and optimize your resume with powerful tools
+      designed to help you stand out.
+    </p>
+  </div>
+
+  <div class="features-grid">
+
+    <!-- Resume Score -->
+    <div class="feature-card score-card">
+      <div class="feature-icon">📊</div>
+
+      <h2>Resume Score</h2>
+
+      <div class="feature-line"></div>
+
+      <p>
+        Get an overall score based on your resume quality,
+        structure, skills and content.
+      </p>
+
+      
+    </div>
+
+    <!-- ATS Analysis -->
+    <div class="feature-card ats-card">
+      <div class="feature-icon">🎯</div>
+
+      <h2>ATS Analysis</h2>
+
+      <div class="feature-line"></div>
+
+      <p>
+        Check how well your resume performs against
+        Applicant Tracking Systems.
+      </p>
+
+      
+    </div>
+
+    <!-- Smart Suggestions -->
+    <div class="feature-card suggestion-card">
+      <div class="feature-icon">💡</div>
+
+      <h2>Smart Suggestions</h2>
+
+      <div class="feature-line"></div>
+
+      <p>
+        Get useful recommendations to improve your resume
+        and increase your chances of getting noticed.
+      </p>
+
+     
+    </div>
+
+  </div>
+
+</section>
+    }
+
+  </main>
+
+
+  <!-- ==================================================
+       FOOTER
+  ================================================== -->
+
+  <footer>
+
+    <p>
+      © 2026 AI Resume Analyzer • Built with Angular & AI
+    </p>
+
+  </footer>
+
+  } <!-- End Home page -->
+
+  <!-- Angular routed pages -->
+  @if (!isHomePage()) {
+    <router-outlet></router-outlet>
+  }
+
+
+  <!-- ==================================================
+       LOGOUT POPUP
+  ================================================== -->
+
+  @if (showLogoutPopup) {
+
+    <div
+      class="logout-overlay"
+      (click)="closeLogoutPopup()"
+    >
+
+      <div
+        class="logout-modal"
+        (click)="$event.stopPropagation()"
+      >
+
+        <button
+          class="close-login logout-close"
+          type="button"
+          (click)="closeLogoutPopup()"
+          aria-label="Close"
+        >
+          ×
+        </button>
+
+        <div class="logout-icon">
+          👤
+        </div>
+
+        <h2>Logout?</h2>
+
+        <p>
+          Are you sure you want to logout?
+        </p>
+
+        <div class="logout-actions">
+
+          <button
+            class="logout-cancel-btn"
+            type="button"
+            (click)="closeLogoutPopup()"
+          >
+            Cancel
+          </button>
+
+          <button
+            class="logout-confirm-btn"
+            type="button"
+            (click)="confirmLogout()"
+          >
+            Logout
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
+
+
+
+  <style>
+    /* LOGIN FORM CONTROLS */
+    .password-wrap { position: relative; width: 100%; }
+    .password-wrap input { padding-right: 52px; }
+    .password-toggle {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      border: 0; background: transparent; cursor: pointer; font-size: 17px;
+      padding: 6px; line-height: 1;
+    }
+    .login-options {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; margin: 10px 0 14px; font-size: 13px;
+    }
+    .remember-option { display: flex; align-items: center; gap: 7px; color: #667085; cursor: pointer; }
+    .remember-option input { width: 15px; height: 15px; accent-color: #5148e8; }
+    .forgot-btn { border: 0; background: transparent; color: #5148e8; font: inherit; font-weight: 700; cursor: pointer; padding: 0; }
+    .forgot-btn:hover { text-decoration: underline; }
+    .login-message {
+      margin: 0 0 12px; padding: 10px 12px; border-radius: 9px;
+      font-size: 13px; text-align: left;
+    }
+    .login-error { background: #fff4f4; border: 1px solid #fecaca; color: #b42318; }
+    .login-success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+    .login-submit:disabled { opacity: .65; cursor: wait; transform: none; }
+
+    /* FINAL LOGIN / SIGNUP BUTTON FIX */
+    .signup-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .link-btn {
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      color: #4f46e5;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .link-btn:hover {
+      color: #3730a3;
+      text-decoration: underline;
+      transform: translateY(-1px);
+    }
+
+    .link-btn:focus-visible {
+      outline: 3px solid rgba(99, 102, 241, 0.22);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .close-login:hover {
+      color: #4f46e5;
+      transform: rotate(90deg);
+    }
+
+    .close-login {
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .login-overlay {
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+      animation: loginOverlayIn 0.2s ease;
+    }
+
+    .login-modal {
+      animation: loginModalIn 0.25s ease;
+    }
+
+    @keyframes loginOverlayIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes loginModalIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .login-modal {
+        padding: 28px 22px;
+        border-radius: 18px;
+      }
+
+      .login-modal h2 {
+        font-size: 25px;
+      }
+    }
+  </style>
+
+  <!-- ==================================================
+       LOGIN MODAL
+  ================================================== -->
+
+  @if (showLogin) {
+
+    <div class="login-overlay">
+
+      <div class="login-modal">
+
+
+        <button
+          class="close-login"
+
+          (click)="closeLogin()"
+        >
+          ×
+        </button>
+
+
+        <div class="login-icon">
+          AI
+        </div>
+
+
+        <h2>
+          Welcome Back
+        </h2>
+
+
+        <p>
+          Login to continue analyzing your resume.
+        </p>
+
+
+        <input
+          type="email"
+          [(ngModel)]="loginEmail"
+          name="loginEmail"
+          placeholder="Enter your email"
+          autocomplete="email"
+        />
+
+
+        <div class="password-wrap">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="loginPassword"
+            name="loginPassword"
+            placeholder="Enter your password"
+            autocomplete="current-password"
+          />
+
+          <button
+            type="button"
+            class="password-toggle"
+            (click)="showPassword = !showPassword"
+            [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+          >
+            {{ showPassword ? '🙈' : '👁️' }}
+          </button>
+        </div>
+
+
+        <div class="login-options">
+          <label class="remember-option">
+            <input
+              type="checkbox"
+              [(ngModel)]="rememberMe"
+              name="rememberMe"
+            />
+            <span>Remember me</span>
+          </label>
+
+          <button
+            type="button"
+            class="forgot-btn"
+            (click)="forgotPassword()"
+          >
+            Forgot Password?
+          </button>
+        </div>
+
+
+        @if (loginError) {
+          <div class="login-message login-error">
+            {{ loginError }}
+          </div>
+        }
+
+        @if (loginSuccess) {
+          <div class="login-message login-success">
+            {{ loginSuccess }}
+          </div>
+        }
+
+
+        <button
+          class="login-submit"
+          [disabled]="isLoggingIn"
+          (click)="login()"
+        >
+          {{ isLoggingIn ? 'Logging in...' : 'Login' }}
+        </button>
+
+
+        <p class="signup-text">
+          Don't have an account?
+          <button
+            type="button"
+            class="link-btn"
+            (click)="openSignup()"
+          >
+            Sign Up
+          </button>
+        </p>
+
+      </div>
+
+    </div>
+
+  }
+
+
+  <!-- ==================================================
+       SIGN UP MODAL
+  ================================================== -->
+
+  @if (showSignup) {
+
+    <div class="login-overlay">
+
+      <div class="login-modal">
+
+
+        <button
+          class="close-login"
+
+          (click)="closeSignup()"
+        >
+          ×
+        </button>
+
+
+        <div class="login-icon">
+          AI
+        </div>
+
+
+        <h2>
+          Create Account
+        </h2>
+
+
+        <p>
+          Create your account to analyze resumes.
+        </p>
+
+
+        <input
+          type="email"
+
+          [(ngModel)]="signupEmail"
+
+          placeholder="Enter your email"
+        />
+
+
+        <input
+          type="password"
+
+          [(ngModel)]="signupPassword"
+
+          placeholder="Create a password"
+        />
+
+
+        <button
+          class="login-submit"
+
+          (click)="signup()"
+        >
+          Sign Up
+        </button>
+
+
+        <p class="signup-text">
+
+          Already have an account?
+
+          <button
+            class="link-btn"
+
+            (click)="openLogin()"
+          >
+            Login
+          </button>
+
+        </p>
+
+      </div>
+
+    </div>
+
+  }
+
+</div>

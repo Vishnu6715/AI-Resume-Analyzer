@@ -1,0 +1,229 @@
+<div class="history-page">
+
+  <div class="history-header">
+    <div>
+      <span class="history-label">YOUR HISTORY</span>
+      <h1>Resume Analysis History</h1>
+      <p>View all your previously analyzed resumes.</p>
+    </div>
+  </div>
+
+  <div class="history-content">
+
+    <div class="history-loading" *ngIf="isLoading">
+      <div class="loading-spinner"></div>
+      <p>Loading your analysis history...</p>
+    </div>
+
+    <div class="history-error" *ngIf="!isLoading && errorMessage">
+      <p>{{ errorMessage }}</p>
+      <button (click)="loadHistory()">Try Again</button>
+    </div>
+
+    <div
+      class="history-empty"
+      *ngIf="!isLoading && !errorMessage && history.length === 0"
+    >
+      <div class="empty-icon">📄</div>
+      <h2>No Analysis History</h2>
+      <p>You haven't analyzed any resumes yet.</p>
+    </div>
+
+    <div
+      class="history-list"
+      *ngIf="!isLoading && !errorMessage && history.length > 0"
+    >
+      <div class="history-card" *ngFor="let item of history">
+
+        <div class="history-file">
+          <div class="file-icon">📄</div>
+
+          <div>
+            <h3>{{ item.fileName }}</h3>
+            <p *ngIf="item.createdAt">
+              {{ item.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+            </p>
+            <p *ngIf="!item.createdAt">Resume analysis</p>
+          </div>
+        </div>
+
+        <div class="history-score">
+          <span>Score</span>
+          <strong>{{ item.score }}</strong>
+          <small>/ 100</small>
+        </div>
+
+        <div class="history-actions">
+          <button
+            class="view-btn"
+            (click)="viewAnalysis(item)"
+          >
+            View
+          </button>
+
+          <button
+            class="delete-btn"
+            (click)="deleteAnalysis(item.id)"
+          >
+            Delete
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- =========================================
+     ANALYSIS DETAILS MODAL
+========================================= -->
+
+<div
+  class="details-overlay"
+  *ngIf="showDetails"
+  (click)="closeDetails()"
+>
+  <div
+    class="details-modal"
+    (click)="$event.stopPropagation()"
+  >
+
+    <button
+      class="details-close"
+      type="button"
+      (click)="closeDetails()"
+      aria-label="Close"
+    >
+      ×
+    </button>
+
+    <div class="details-header">
+      <span class="details-label">ANALYSIS DETAILS</span>
+
+      <h2>
+        {{ selectedDetails?.fileName || 'Resume Analysis' }}
+      </h2>
+
+      <p>Complete analysis result from your previous resume.</p>
+    </div>
+
+
+    <div class="details-loading" *ngIf="isLoadingDetails">
+      <div class="loading-spinner"></div>
+      <p>Loading analysis details...</p>
+    </div>
+
+
+    <div
+      class="details-body"
+      *ngIf="!isLoadingDetails && selectedDetails"
+    >
+
+      <div class="details-score-box">
+        <div>
+          <span>Overall Score</span>
+          <strong>{{ selectedDetails.score }}</strong>
+          <small>/100</small>
+        </div>
+      </div>
+
+
+      <div class="details-metrics">
+
+        <div class="metric">
+          <span>ATS Score</span>
+          <strong>{{ selectedDetails.atsScore }}%</strong>
+        </div>
+
+        <div class="metric">
+          <span>Skills Match</span>
+          <strong>{{ selectedDetails.skillsMatch }}%</strong>
+        </div>
+
+        <div class="metric">
+          <span>Experience</span>
+          <strong>{{ selectedDetails.experience }}</strong>
+        </div>
+
+      </div>
+
+
+      <div class="details-section" *ngIf="selectedDetails.strengths?.length">
+        <h3>💪 Strengths</h3>
+
+        <div class="tag-list">
+          <span
+            class="tag success-tag"
+            *ngFor="let item of selectedDetails.strengths"
+          >
+            {{ item }}
+          </span>
+        </div>
+      </div>
+
+
+      <div class="details-section" *ngIf="selectedDetails.matchedSkills?.length">
+        <h3>🧩 Matched Skills</h3>
+
+        <div class="tag-list">
+          <span
+            class="tag success-tag"
+            *ngFor="let item of selectedDetails.matchedSkills"
+          >
+            {{ item }}
+          </span>
+        </div>
+      </div>
+
+
+      <div class="details-section" *ngIf="selectedDetails.missingSkills?.length">
+        <h3>⚠️ Missing Skills</h3>
+
+        <div class="tag-list">
+          <span
+            class="tag warning-tag"
+            *ngFor="let item of selectedDetails.missingSkills"
+          >
+            {{ item }}
+          </span>
+        </div>
+      </div>
+
+
+      <div class="details-section" *ngIf="selectedDetails.warnings?.length">
+        <h3>⚠️ Warnings</h3>
+
+        <ul class="details-list">
+          <li *ngFor="let item of selectedDetails.warnings">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="details-section" *ngIf="selectedDetails.recommendations?.length">
+        <h3>💡 Recommendations</h3>
+
+        <ul class="details-list">
+          <li *ngFor="let item of selectedDetails.recommendations">
+            {{ item }}
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="details-footer">
+      <button
+        type="button"
+        class="close-details-btn"
+        (click)="closeDetails()"
+      >
+        Close
+      </button>
+    </div>
+
+  </div>
+</div>
