@@ -137,14 +137,9 @@ The complete application is deployed on Render.
 - **Backend:** Spring Boot Web Service
 - **Database:** PostgreSQL
 
-## Repository
-
-GitHub Repository:  
-https://github.com/Akpatil7741/AI-Resume-Analyzer
-
 ## Author
 
-**Akash Patil**
+**VISHNU KUMAR V**
 
-B.Tech Engineering Student  
+BE.ECE Student  
 Interested in Software Development, Full-Stack Development and AI/ML.
