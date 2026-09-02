@@ -62,7 +62,7 @@ export class Dashboard implements OnInit {
     }
 
     this.http.get<DashboardStats>(
-      `https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/dashboard?userEmail=${encodeURIComponent(userEmail)}`
+      `/api/resume/dashboard?userEmail=${encodeURIComponent(userEmail)}`
     )
     .subscribe({
 

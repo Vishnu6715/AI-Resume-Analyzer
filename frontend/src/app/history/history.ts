@@ -72,7 +72,7 @@ export class History implements OnInit {
     }
 
     const url =
-      `https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/history?userEmail=${encodeURIComponent(this.userEmail)}`;
+      `/api/resume/history?userEmail=${encodeURIComponent(this.userEmail)}`;
     this.http.get<HistoryItem[]>(url).subscribe({
       next: (response) => {
         console.log('History Response:', response);
@@ -98,7 +98,7 @@ export class History implements OnInit {
     document.body.style.overflow = 'hidden';
 
     const url =
-  `https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/history/details?id=${item.id}&userEmail=${encodeURIComponent(this.userEmail)}`;
+  `/api/resume/history/details?id=${item.id}&userEmail=${encodeURIComponent(this.userEmail)}`;
 
     this.http.get<HistoryDetails>(url).subscribe({
       next: (response) => {
@@ -153,7 +153,7 @@ export class History implements OnInit {
     }
 
    const url =
-  `https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/history?id=${id}&userEmail=${encodeURIComponent(this.userEmail)}`;
+  `/api/resume/history?id=${id}&userEmail=${encodeURIComponent(this.userEmail)}`;
 
     this.http.delete(url).subscribe({
       next: () => {

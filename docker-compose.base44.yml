@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: resume_analyzer
+      POSTGRES_USER: resume
+      POSTGRES_PASSWORD: resume_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U resume"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    image: maven:3.9-eclipse-temurin-21
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+      - maven-cache:/root/.m2
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/resume_analyzer
+      SPRING_DATASOURCE_USERNAME: resume
+      SPRING_DATASOURCE_PASSWORD: resume_pass
+      PORT: 8080
+    depends_on:
+      db:
+        condition: service_healthy
+    command: mvn spring-boot:run -Dspring-boot.run.arguments=--server.address=0.0.0.0
+    ports:
+      - "8080:8080"
+
+  frontend:
+    image: node:24
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - frontend-node-modules:/app/node_modules
+    ports:
+      - "3000:4200"
+    command: sh -c "npm install && npx ng serve --host 0.0.0.0 --port 4200 --proxy-config proxy.conf.json"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata:
+  maven-cache:
+  frontend-node-modules:

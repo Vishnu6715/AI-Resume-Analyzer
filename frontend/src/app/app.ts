@@ -378,7 +378,7 @@ export class App {
 
     this.http.post(
 
-       'https://ai-resume-analyzer-backend-wgfm.onrender.com/api/auth/login',
+       '/api/auth/login',
       user,
 
       {
@@ -502,7 +502,7 @@ export class App {
 
     this.http.post(
 
-       'https://ai-resume-analyzer-backend-wgfm.onrender.com/api/auth/signup',
+       '/api/auth/signup',
 
       user,
 
@@ -795,7 +795,7 @@ goToHistory(): void {
 
     this.http.get<DashboardStats>(
 
-      `https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/dashboard?userEmail=${encodeURIComponent(this.loggedInEmail)}`
+      `/api/resume/dashboard?userEmail=${encodeURIComponent(this.loggedInEmail)}`
 
     )
 
@@ -888,7 +888,7 @@ goToHistory(): void {
 
     this.http.get<AnalysisHistory[]>(
 
-      `https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/history?userEmail=${encodeURIComponent(this.loggedInEmail)}`
+      `/api/resume/history?userEmail=${encodeURIComponent(this.loggedInEmail)}`
 
     )
 
@@ -973,7 +973,7 @@ goToHistory(): void {
 
     this.http.delete(
 
-      `https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/history?id=${id}`
+      `/api/resume/history?id=${id}`
 
     )
 
@@ -1087,7 +1087,7 @@ goToHistory(): void {
 
     this.http.get<HistoryDetails>(
 
-      `https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/history/details?id=${id}`
+      `/api/resume/history/details?id=${id}`
 
     )
 
@@ -1436,7 +1436,7 @@ goToHistory(): void {
 
     this.http.post<AnalysisResult>(
 
-      'https://ai-resume-analyzer-backend-wgfm.onrender.com/api/resume/upload',
+      '/api/resume/upload',
 
       formData
 
