@@ -1,184 +1,255 @@
 <div class="dashboard-page">
 
+  <!-- ==============================
+       HEADER
+  ============================== -->
+
   <header class="dashboard-header">
-
-    <div>
-      <span class="dashboard-label">YOUR DASHBOARD</span>
-
-      <h1>Resume Analysis Overview</h1>
-
-      <p>
-        Your real analysis statistics from the database.
-      </p>
-    </div>
-
+    <span class="dashboard-label">YOUR DASHBOARD</span>
+    <h1>Resume Analysis Overview</h1>
+    <p>Track your progress and see exactly how to improve your resume.</p>
   </header>
-
 
   <main class="dashboard-content">
 
-    <!-- ==============================
-         STATISTICS
-    =============================== -->
+    <!-- LOADING -->
 
-    <section class="dashboard-stats">
-
-      <!-- Total Analyses -->
-
-      <div class="dashboard-card">
-
-        <div class="dashboard-icon">
-          📄
-        </div>
-
-        <h3>Total Analyses</h3>
-
-        <div class="dashboard-number">
-          {{ dashboardStats?.totalAnalyses ?? 0 }}
-        </div>
-
-        <p>Resumes analyzed</p>
-
+    @if (isLoading) {
+      <div class="dashboard-loading">
+        <div class="loading-spinner"></div>
+        <p>Loading your dashboard...</p>
       </div>
+    }
 
+    <!-- ERROR -->
 
-      <!-- Average Score -->
-
-      <div class="dashboard-card">
-
-        <div class="dashboard-icon">
-          ⭐
-        </div>
-
-        <h3>Average Score</h3>
-
-        <div class="dashboard-number">
-          {{ dashboardStats?.averageScore ?? 0 }}
-        </div>
-
-        <p>Out of 100</p>
-
+    @if (!isLoading && errorMessage) {
+      <div class="dashboard-error">
+        <p>{{ errorMessage }}</p>
+        <button (click)="loadDashboard()">Try Again</button>
       </div>
+    }
 
+    <!-- EMPTY STATE -->
 
-      <!-- Average ATS -->
-
-      <div class="dashboard-card">
-
-        <div class="dashboard-icon">
-          🎯
-        </div>
-
-        <h3>Average ATS</h3>
-
-        <div class="dashboard-number">
-          {{ dashboardStats?.averageAtsScore ?? 0 }}%
-        </div>
-
-        <p>ATS compatibility</p>
-
+    @if (!isLoading && !errorMessage && !latestAnalysis) {
+      <div class="dashboard-empty">
+        <div class="empty-icon">📄</div>
+        <h2>No Analysis Yet</h2>
+        <p>Upload and analyze your first resume to see results here.</p>
       </div>
-
-
-      <!-- Skills Match -->
-
-      <div class="dashboard-card">
-
-        <div class="dashboard-icon">
-          🧩
-        </div>
-
-        <h3>Skills Match</h3>
-
-        <div class="dashboard-number">
-          {{ dashboardStats?.averageSkillsMatch ?? 0 }}%
-        </div>
-
-        <p>Average skill match</p>
-
-      </div>
-
-    </section>
-
+    }
 
     <!-- ==============================
-         BEST + LATEST
-    =============================== -->
+         DASHBOARD CONTENT
+    ============================== -->
 
-    <section class="dashboard-highlight">
+    @if (!isLoading && !errorMessage && latestAnalysis) {
 
+      <!-- STAT CARDS -->
 
-      <!-- BEST ANALYSIS -->
-
-      <div class="highlight-card">
-
-        <div class="highlight-title">
-          🏆 BEST ANALYSIS
+      <section class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-blue">📄</div>
+          <h3>Total Analyses</h3>
+          <div class="stat-number">{{ dashboardStats?.totalAnalyses ?? 0 }}</div>
+          <p>Resumes analyzed</p>
         </div>
 
-        <div class="highlight-content">
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-indigo">⭐</div>
+          <h3>Average Score</h3>
+          <div class="stat-number">{{ dashboardStats?.averageScore ?? 0 }}</div>
+          <p>Out of 100</p>
+        </div>
 
-          <div>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-green">🎯</div>
+          <h3>Average ATS</h3>
+          <div class="stat-number">{{ dashboardStats?.averageAtsScore ?? 0 }}%</div>
+          <p>ATS compatibility</p>
+        </div>
 
-            <h2>
-              {{ dashboardStats?.bestResume || 'No analysis yet' }}
-            </h2>
+        <div class="stat-card">
+          <div class="stat-icon stat-icon-amber">🧩</div>
+          <h3>Skills Match</h3>
+          <div class="stat-number">{{ dashboardStats?.averageSkillsMatch ?? 0 }}%</div>
+          <p>Average match rate</p>
+        </div>
+      </section>
 
-            <p>
-              Your highest resume score
-            </p>
+      <!-- LATEST ANALYSIS: SCORE + KEYWORD MATCHING -->
 
+      <section class="analysis-section">
+        <div class="section-heading">
+          <h2>Latest Analysis</h2>
+          <span class="section-file">{{ selectedAnalysis?.fileName }}</span>
+        </div>
+
+        <div class="analysis-grid">
+
+          <!-- Score Breakdown -->
+
+          <div class="score-panel">
+            <div class="score-circle" [style.--score-color]="getScoreColor(selectedAnalysis?.score ?? 0)" [style.--score]="selectedAnalysis?.score ?? 0">
+              <div class="score-value">
+                <strong>{{ selectedAnalysis?.score ?? 0 }}</strong>
+                <small>/ 100</small>
+              </div>
+            </div>
+
+            <div class="score-metrics">
+              <div class="score-metric">
+                <span class="metric-label">ATS Score</span>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill" [style.width.%]="selectedAnalysis?.atsScore ?? 0"
+                    [style.background]="getScoreColor(selectedAnalysis?.atsScore ?? 0)"></div>
+                </div>
+                <span class="metric-value">{{ selectedAnalysis?.atsScore ?? 0 }}%</span>
+              </div>
+
+              <div class="score-metric">
+                <span class="metric-label">Skills Match</span>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill" [style.width.%]="selectedAnalysis?.skillsMatch ?? 0"
+                    [style.background]="getScoreColor(selectedAnalysis?.skillsMatch ?? 0)"></div>
+                </div>
+                <span class="metric-value">{{ selectedAnalysis?.skillsMatch ?? 0 }}%</span>
+              </div>
+
+              <div class="score-metric">
+                <span class="metric-label">Experience</span>
+                <div class="metric-bar">
+                  <div class="metric-bar-fill" [style.width.%]="selectedAnalysis?.experience ?? 0"
+                    [style.background]="getScoreColor(selectedAnalysis?.experience ?? 0)"></div>
+                </div>
+                <span class="metric-value">{{ selectedAnalysis?.experience ?? 0 }}%</span>
+              </div>
+            </div>
           </div>
 
-          <div class="highlight-score">
+          <!-- Keyword Matching -->
 
-            {{ dashboardStats?.bestScore ?? 0 }}
+          <div class="keyword-panel">
+            <h3>Keyword Matching</h3>
 
-            <span>/ 100</span>
+            <div class="keyword-summary">
+              <div class="keyword-stat">
+                <strong class="keyword-matched">{{ getMatchedCount() }}</strong>
+                <span>Matched</span>
+              </div>
+              <div class="keyword-divider"></div>
+              <div class="keyword-stat">
+                <strong class="keyword-missing">{{ getMissingCount() }}</strong>
+                <span>Missing</span>
+              </div>
+              <div class="keyword-divider"></div>
+              <div class="keyword-stat">
+                <strong class="keyword-total">{{ getTotalKeywords() }}</strong>
+                <span>Total</span>
+              </div>
+            </div>
 
+            <div class="keyword-progress">
+              <div class="keyword-progress-fill" [style.width.%]="getMatchPercentage()"></div>
+            </div>
+            <p class="keyword-progress-label">{{ getMatchPercentage() }}% match rate</p>
+
+            <!-- Matched Skills -->
+
+            @if (selectedAnalysis?.matchedSkills?.length) {
+              <div class="keyword-group">
+                <h4>✓ Matched Keywords</h4>
+                <div class="keyword-tags">
+                  @for (skill of selectedAnalysis.matchedSkills; track skill) {
+                    <span class="keyword-tag matched">{{ skill }}</span>
+                  }
+                </div>
+              </div>
+            }
+
+            <!-- Missing Skills -->
+
+            @if (selectedAnalysis?.missingSkills?.length) {
+              <div class="keyword-group">
+                <h4>✕ Missing Keywords</h4>
+                <div class="keyword-tags">
+                  @for (skill of selectedAnalysis.missingSkills; track skill) {
+                    <span class="keyword-tag missing">{{ skill }}</span>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (!getTotalKeywords()) {
+              <p class="keyword-empty">No job description was provided for this analysis.</p>
+            }
           </div>
 
         </div>
+      </section>
 
-      </div>
+      <!-- IMPROVEMENTS: STRENGTHS + RECOMMENDATIONS + WARNINGS -->
 
-
-      <!-- LATEST ANALYSIS -->
-
-      <div class="highlight-card">
-
-        <div class="highlight-title">
-          🕘 LATEST ANALYSIS
+      <section class="improvements-section">
+        <div class="section-heading">
+          <h2>Improvements</h2>
         </div>
 
-        <div class="highlight-content">
+        <div class="improvements-grid">
 
-          <div>
+          <!-- Strengths -->
 
-            <h2>
-              {{ dashboardStats?.latestResume || 'No analysis yet' }}
-            </h2>
+          @if (selectedAnalysis?.strengths?.length) {
+            <div class="improve-card improve-strengths">
+              <div class="improve-header">
+                <span class="improve-icon">💪</span>
+                <h3>Strengths</h3>
+              </div>
+              <div class="improve-tags">
+                @for (item of selectedAnalysis.strengths; track item) {
+                  <span class="improve-tag strength-tag">{{ item }}</span>
+                }
+              </div>
+            </div>
+          }
 
-            <p>
-              Most recently analyzed resume
-            </p>
+          <!-- Recommendations -->
 
-          </div>
+          @if (selectedAnalysis?.recommendations?.length) {
+            <div class="improve-card improve-recommendations">
+              <div class="improve-header">
+                <span class="improve-icon">💡</span>
+                <h3>Recommendations</h3>
+              </div>
+              <ul class="improve-list">
+                @for (item of selectedAnalysis.recommendations; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          }
 
-          <div class="highlight-score">
+          <!-- Warnings -->
 
-            {{ dashboardStats?.latestScore ?? 0 }}
-
-            <span>/ 100</span>
-
-          </div>
+          @if (selectedAnalysis?.warnings?.length) {
+            <div class="improve-card improve-warnings">
+              <div class="improve-header">
+                <span class="improve-icon">⚠️</span>
+                <h3>Warnings</h3>
+              </div>
+              <ul class="improve-list">
+                @for (item of selectedAnalysis.warnings; track item) {
+                  <li>{{ item }}</li>
+                }
+              </ul>
+            </div>
+          }
 
         </div>
+      </section>
 
-      </div>
-
-
-    </section>
+    }
 
   </main>
 
